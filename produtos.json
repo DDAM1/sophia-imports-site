@@ -1,1 +1,37 @@
-fetch('https://raw.githubusercontent.com/DDAM1/sophia-imports-site/main/produtos.json')
+[
+  {
+    "nome": "Celular Xiaomi POCO C61",
+    "descricao": "Dual SIM 64GB, 3GB RAM, tela 6.71”",
+    "imagem": "https://www.megaeletronicos.com/images/produtos/1482171.jpg",
+    "preco": "R$ 461,34",
+    "link": "https://www.megaeletronicos.com/producto/1482171/celular-xiaomi-poco-c61-dual-sim"
+  },
+  {
+    "nome": "Console Nintendo Switch OLED",
+    "descricao": "Console portátil com tela OLED de 7 polegadas",
+    "imagem": "https://www.megaeletronicos.com/images/produtos/1400001.jpg",
+    "preco": "R$ 3.337,59",
+    "link": "https://www.megaeletronicos.com/producto/1400001/console-nintendo-switch-oled"
+  },
+  {
+    "nome": "Notebook Dell Inspiron 15",
+    "descricao": "Intel Core i5, 8GB RAM, 256GB SSD",
+    "imagem": "https://www.megaeletronicos.com/images/produtos/1300001.jpg",
+    "preco": "R$ 5.819,28",
+    "link": "https://www.megaeletronicos.com/producto/1300001/notebook-dell-inspiron-15"
+  },
+  {
+    "nome": "Monitor Samsung 24\" Full HD",
+    "descricao": "Monitor LED 24 polegadas, resolução 1920x1080",
+    "imagem": "https://www.megaeletronicos.com/images/produtos/1200001.jpg",
+    "preco": "R$ 1.248,00",
+    "link": "https://www.megaeletronicos.com/producto/1200001/monitor-samsung-24-full-hd"
+  },
+  {
+    "nome": "Perfume Giorgio Armani Code",
+    "descricao": "Eau de Toilette Masculino - 125ml",
+    "imagem": "https://www.megaeletronicos.com/images/produtos/1111111.jpg",
+    "preco": "R$ 624,00",
+    "link": "https://www.megaeletronicos.com/producto/1111111/perfume-armani-code"
+  }
+]
