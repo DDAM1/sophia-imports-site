@@ -1,109 +1,20 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sophia Imports</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f5f5f5;
-      color: #333;
-    }
-    header {
-      background-color: #111;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    header img {
-      max-height: 80px;
-    }
-    main {
-      padding: 30px;
-    }
-    .produtos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-    .produto {
-      background-color: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .produto img {
-      width: 100%;
-      max-height: 180px;
-      object-fit: contain;
-      margin-bottom: 15px;
-    }
-    .whatsapp-button {
-      display: inline-block;
-      background-color: #25D366;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: bold;
-      text-decoration: none;
-      margin-top: 10px;
-    }
-    footer {
-      background-color: #111;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <img src="logo.png" alt="Logo da Sophia Imports" />
-    <h1>Sophia Imports</h1>
-    <p>Perfumes Importados e Eletrônicos de Qualidade</p>
-  </header>
+<script>
+  const urlJSON = 'https://gist.githubusercontent.com/DDAM1/REPLACE_ID/raw/produtos.json';
 
-  <main>
-    <h2 style="text-align: center;">Nossos Produtos</h2>
-    <div class="produtos">
-
-      <div class="produto">
-        <img src="https://via.placeholder.com/250x180?text=iPhone+14+Pro" alt="iPhone 14 Pro">
-        <h3>iPhone 14 Pro</h3>
-        <p>128GB, Desbloqueado, Preto Espacial</p>
-        <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá%2C%20tenho%20interesse%20no%20iPhone%2014%20Pro%20da%20Sophia%20Imports!" target="_blank">
-          Comprar no WhatsApp
-        </a>
-      </div>
-
-      <div class="produto">
-        <img src="https://via.placeholder.com/250x180?text=Perfume+Armani" alt="Perfume Armani Code">
-        <h3>Armani Code EDT</h3>
-        <p>100ml - Masculino</p>
-        <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá%2C%20tenho%20interesse%20no%20perfume%20Armani%20Code%20da%20Sophia%20Imports!" target="_blank">
-          Comprar no WhatsApp
-        </a>
-      </div>
-
-      <div class="produto">
-        <img src="https://via.placeholder.com/250x180?text=PlayStation+5" alt="PlayStation 5">
-        <h3>PlayStation 5</h3>
-        <p>Edição com Leitor de Disco - 1TB</p>
-        <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá%2C%20tenho%20interesse%20no%20PlayStation%205%20da%20Sophia%20Imports!" target="_blank">
-          Comprar no WhatsApp
-        </a>
-      </div>
-
-    </div>
-  </main>
-
-  <footer>
-    © 2025 Sophia Imports. Todos os direitos reservados.  
-    <br>Contato via WhatsApp: (14) 99861-9912
-  </footer>
-</body>
-</html>
+  fetch(urlJSON)
+    .then(res => res.json())
+    .then(produtos => {
+      const container = document.getElementById('produtos-container');
+      produtos.forEach(p => {
+        container.innerHTML += `
+          <div class="produto">
+            <img src="${p.imagem}" alt="${p.nome}">
+            <h3>${p.nome}</h3>
+            <p>${p.descricao}</p>
+            <p>Preço: ${p.preco}</p>
+            <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá,%20quero%20o%20${encodeURIComponent(p.nome)}" target="_blank">Comprar no WhatsApp</a>
+          </div>`;
+      });
+    })
+    .catch(err => console.error(err));
+</script>
