@@ -1,20 +1,55 @@
-<script>
-  const urlJSON = 'https://gist.githubusercontent.com/DDAM1/REPLACE_ID/raw/produtos.json';
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sophia Imports</title>
+  <style>
+    body { font-family: Arial,sans-serif; margin:0; padding:0; background:#f5f5f5; }
+    header, footer { background:#111; color:white; text-align:center; padding:20px; }
+    h1,h2 { margin:0; padding:10px 0; }
+    .produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px; }
+    .produto { background:white; padding:15px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; }
+    .produto img { width:100%; max-height:180px; object-fit:contain; }
+    .whatsapp-button { display:inline-block; margin-top:10px; background:#25D366; color:white; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sophia Imports</h1>
+    <p>Perfumes e Eletrônicos de Qualidade</p>
+  </header>
 
-  fetch(urlJSON)
-    .then(res => res.json())
-    .then(produtos => {
-      const container = document.getElementById('produtos-container');
-      produtos.forEach(p => {
-        container.innerHTML += `
+  <main>
+    <h2 style="text-align:center">Confira nossos produtos</h2>
+    <div class="produtos" id="produtos-container"></div>
+  </main>
+
+  <footer>
+    © 2025 Sophia Imports • WhatsApp: (14) 99861‑9912
+  </footer>
+
+  <script>
+    fetch('https://raw.githubusercontent.com/DDAM1/sophia-imports-site/main/produtos.json')
+      .then(r => r.ok ? r.json() : Promise.reject('Não localizou produtos'))
+      .then(list => {
+        const cont = document.getElementById('produtos-container');
+        cont.innerHTML = list.map(p => `
           <div class="produto">
             <img src="${p.imagem}" alt="${p.nome}">
             <h3>${p.nome}</h3>
             <p>${p.descricao}</p>
             <p>Preço: ${p.preco}</p>
-            <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá,%20quero%20o%20${encodeURIComponent(p.nome)}" target="_blank">Comprar no WhatsApp</a>
-          </div>`;
+            <a class="whatsapp-button" href="https://wa.me/5514998619912?text=${encodeURIComponent('Olá, quero o ' + p.nome)}" target="_blank">
+              Comprar no WhatsApp
+            </a>
+          </div>
+        `).join('');
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('produtos-container').innerHTML = '<p style="text-align:center;">Erro ao carregar produtos. Verifique o JSON.</p>';
       });
-    })
-    .catch(err => console.error(err));
-</script>
+  </script>
+</body>
+</html>
