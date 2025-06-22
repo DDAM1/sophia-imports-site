@@ -1,88 +1,109 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sophia Imports</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    header {
+      background-color: #111;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header img {
+      max-height: 80px;
+    }
+    main {
+      padding: 30px;
+    }
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .produto {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .produto img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+    .whatsapp-button {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+    footer {
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <!-- Cabeçalho -->
-  <header class="bg-white shadow p-4">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <img src="sophis.png" alt="Logo Sophia Imports" class="h-12 w-12 rounded-full">
-        <h1 class="text-2xl font-bold">Sophia Imports</h1>
-      </div>
-      <nav class="space-x-4">
-        <a href="#celulares" class="hover:underline">Celulares</a>
-        <a href="#consoles" class="hover:underline">Consoles</a>
-        <a href="#pcs" class="hover:underline">PCs</a>
-        <a href="#monitores" class="hover:underline">Monitores</a>
-        <a href="#perfumes" class="hover:underline">Perfumes</a>
-      </nav>
-    </div>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo da Sophia Imports" />
+    <h1>Sophia Imports</h1>
+    <p>Perfumes Importados e Eletrônicos de Qualidade</p>
   </header>
 
-  <!-- Banner -->
-  <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center p-10">
-    <h2 class="text-3xl font-semibold mb-2">Ofertas imperdíveis em eletrônicos e perfumes</h2>
-    <p>Qualidade e preço justo você encontra aqui</p>
-  </section>
+  <main>
+    <h2 style="text-align: center;">Nossos Produtos</h2>
+    <div class="produtos">
 
-  <!-- Produtos -->
-  <main class="max-w-6xl mx-auto p-6 space-y-10">
-    <!-- Categoria genérica -->
-    <script>
-      const produtos = {
-        celulares: [
-          { nome: "iPhone 14 Pro Max", preco: "R$ 7.999,00", imagem: "https://via.placeholder.com/300x200" },
-          { nome: "Samsung Galaxy S24", preco: "R$ 5.499,00", imagem: "https://via.placeholder.com/300x200" }
-        ],
-        consoles: [
-          { nome: "PlayStation 5", preco: "R$ 4.299,00", imagem: "https://via.placeholder.com/300x200" },
-          { nome: "Xbox Series X", preco: "R$ 3.999,00", imagem: "https://via.placeholder.com/300x200" }
-        ],
-        pcs: [
-          { nome: "PC Gamer Ryzen 5 / RTX 3060", preco: "R$ 6.799,00", imagem: "https://via.placeholder.com/300x200" }
-        ],
-        monitores: [
-          { nome: "Monitor LG 27'' 144Hz", preco: "R$ 1.399,00", imagem: "https://via.placeholder.com/300x200" }
-        ],
-        perfumes: [
-          { nome: "Dior Sauvage 100ml", preco: "R$ 699,00", imagem: "https://via.placeholder.com/300x200" },
-          { nome: "Perfume Árabe Lattafa Asad", preco: "R$ 259,00", imagem: "https://via.placeholder.com/300x200" }
-        ]
-      };
+      <div class="produto">
+        <img src="https://via.placeholder.com/250x180?text=iPhone+14+Pro" alt="iPhone 14 Pro">
+        <h3>iPhone 14 Pro</h3>
+        <p>128GB, Desbloqueado, Preto Espacial</p>
+        <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá%2C%20tenho%20interesse%20no%20iPhone%2014%20Pro%20da%20Sophia%20Imports!" target="_blank">
+          Comprar no WhatsApp
+        </a>
+      </div>
 
-      function renderCategoria(id, titulo) {
-        document.write(`<section id="${id}">
-          <h3 class="text-2xl font-semibold mb-4">${titulo}</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`);
-        produtos[id].forEach(p => {
-          document.write(`
-            <div class="bg-white p-4 rounded shadow">
-              <img src="${p.imagem}" alt="${p.nome}" class="mb-2 w-full h-48 object-cover rounded">
-              <h4 class="text-lg font-bold">${p.nome}</h4>
-              <p class="text-indigo-600 font-semibold">${p.preco}</p>
-            </div>
-          `);
-        });
-        document.write(`</div></section>`);
-      }
+      <div class="produto">
+        <img src="https://via.placeholder.com/250x180?text=Perfume+Armani" alt="Perfume Armani Code">
+        <h3>Armani Code EDT</h3>
+        <p>100ml - Masculino</p>
+        <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá%2C%20tenho%20interesse%20no%20perfume%20Armani%20Code%20da%20Sophia%20Imports!" target="_blank">
+          Comprar no WhatsApp
+        </a>
+      </div>
 
-      renderCategoria("celulares", "Celulares");
-      renderCategoria("consoles", "Consoles");
-      renderCategoria("pcs", "PCs Montados");
-      renderCategoria("monitores", "Monitores");
-      renderCategoria("perfumes", "Perfumes Importados e Árabes");
-    </script>
+      <div class="produto">
+        <img src="https://via.placeholder.com/250x180?text=PlayStation+5" alt="PlayStation 5">
+        <h3>PlayStation 5</h3>
+        <p>Edição com Leitor de Disco - 1TB</p>
+        <a class="whatsapp-button" href="https://wa.me/5514998619912?text=Olá%2C%20tenho%20interesse%20no%20PlayStation%205%20da%20Sophia%20Imports!" target="_blank">
+          Comprar no WhatsApp
+        </a>
+      </div>
+
+    </div>
   </main>
 
-  <!-- Rodapé -->
-  <footer class="bg-white text-center p-4 mt-10 border-t">
-    <p>&copy; 2025 Sophia Imports. Todos os direitos reservados.</p>
+  <footer>
+    © 2025 Sophia Imports. Todos os direitos reservados.  
+    <br>Contato via WhatsApp: (14) 99861-9912
   </footer>
 </body>
 </html>
