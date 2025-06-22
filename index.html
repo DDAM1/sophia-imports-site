@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophia Imports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Cabeçalho -->
+  <header class="bg-white shadow p-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="sophis.png" alt="Logo Sophia Imports" class="h-12 w-12 rounded-full">
+        <h1 class="text-2xl font-bold">Sophia Imports</h1>
+      </div>
+      <nav class="space-x-4">
+        <a href="#celulares" class="hover:underline">Celulares</a>
+        <a href="#consoles" class="hover:underline">Consoles</a>
+        <a href="#pcs" class="hover:underline">PCs</a>
+        <a href="#monitores" class="hover:underline">Monitores</a>
+        <a href="#perfumes" class="hover:underline">Perfumes</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center p-10">
+    <h2 class="text-3xl font-semibold mb-2">Ofertas imperdíveis em eletrônicos e perfumes</h2>
+    <p>Qualidade e preço justo você encontra aqui</p>
+  </section>
+
+  <!-- Produtos -->
+  <main class="max-w-6xl mx-auto p-6 space-y-10">
+    <!-- Categoria genérica -->
+    <script>
+      const produtos = {
+        celulares: [
+          { nome: "iPhone 14 Pro Max", preco: "R$ 7.999,00", imagem: "https://via.placeholder.com/300x200" },
+          { nome: "Samsung Galaxy S24", preco: "R$ 5.499,00", imagem: "https://via.placeholder.com/300x200" }
+        ],
+        consoles: [
+          { nome: "PlayStation 5", preco: "R$ 4.299,00", imagem: "https://via.placeholder.com/300x200" },
+          { nome: "Xbox Series X", preco: "R$ 3.999,00", imagem: "https://via.placeholder.com/300x200" }
+        ],
+        pcs: [
+          { nome: "PC Gamer Ryzen 5 / RTX 3060", preco: "R$ 6.799,00", imagem: "https://via.placeholder.com/300x200" }
+        ],
+        monitores: [
+          { nome: "Monitor LG 27'' 144Hz", preco: "R$ 1.399,00", imagem: "https://via.placeholder.com/300x200" }
+        ],
+        perfumes: [
+          { nome: "Dior Sauvage 100ml", preco: "R$ 699,00", imagem: "https://via.placeholder.com/300x200" },
+          { nome: "Perfume Árabe Lattafa Asad", preco: "R$ 259,00", imagem: "https://via.placeholder.com/300x200" }
+        ]
+      };
+
+      function renderCategoria(id, titulo) {
+        document.write(`<section id="${id}">
+          <h3 class="text-2xl font-semibold mb-4">${titulo}</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">`);
+        produtos[id].forEach(p => {
+          document.write(`
+            <div class="bg-white p-4 rounded shadow">
+              <img src="${p.imagem}" alt="${p.nome}" class="mb-2 w-full h-48 object-cover rounded">
+              <h4 class="text-lg font-bold">${p.nome}</h4>
+              <p class="text-indigo-600 font-semibold">${p.preco}</p>
+            </div>
+          `);
+        });
+        document.write(`</div></section>`);
+      }
+
+      renderCategoria("celulares", "Celulares");
+      renderCategoria("consoles", "Consoles");
+      renderCategoria("pcs", "PCs Montados");
+      renderCategoria("monitores", "Monitores");
+      renderCategoria("perfumes", "Perfumes Importados e Árabes");
+    </script>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="bg-white text-center p-4 mt-10 border-t">
+    <p>&copy; 2025 Sophia Imports. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
