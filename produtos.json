@@ -35,4 +35,3 @@
     "link": "https://www.megaeletronicos.com/producto/1111111/perfume-armani-code"
   }
 ]
-fetch('https://raw.githubusercontent.com/DDAM1/sophia-imports-site/main/produtos.json')
