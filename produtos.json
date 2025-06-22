@@ -1,37 +1,92 @@
-[
-  {
-    "nome": "Celular Xiaomi POCO C61",
-    "descricao": "Dual SIM 64GB, 3GB RAM, tela 6.71”",
-    "imagem": "https://www.megaeletronicos.com/images/produtos/1482171.jpg",
-    "preco": "R$ 461,34",
-    "link": "https://www.megaeletronicos.com/producto/1482171/celular-xiaomi-poco-c61-dual-sim"
-  },
-  {
-    "nome": "Console Nintendo Switch OLED",
-    "descricao": "Console portátil com tela OLED de 7 polegadas",
-    "imagem": "https://www.megaeletronicos.com/images/produtos/1400001.jpg",
-    "preco": "R$ 3.337,59",
-    "link": "https://www.megaeletronicos.com/producto/1400001/console-nintendo-switch-oled"
-  },
-  {
-    "nome": "Notebook Dell Inspiron 15",
-    "descricao": "Intel Core i5, 8GB RAM, 256GB SSD",
-    "imagem": "https://www.megaeletronicos.com/images/produtos/1300001.jpg",
-    "preco": "R$ 5.819,28",
-    "link": "https://www.megaeletronicos.com/producto/1300001/notebook-dell-inspiron-15"
-  },
-  {
-    "nome": "Monitor Samsung 24\" Full HD",
-    "descricao": "Monitor LED 24 polegadas, resolução 1920x1080",
-    "imagem": "https://www.megaeletronicos.com/images/produtos/1200001.jpg",
-    "preco": "R$ 1.248,00",
-    "link": "https://www.megaeletronicos.com/producto/1200001/monitor-samsung-24-full-hd"
-  },
-  {
-    "nome": "Perfume Giorgio Armani Code",
-    "descricao": "Eau de Toilette Masculino - 125ml",
-    "imagem": "https://www.megaeletronicos.com/images/produtos/1111111.jpg",
-    "preco": "R$ 624,00",
-    "link": "https://www.megaeletronicos.com/producto/1111111/perfume-armani-code"
-  }
-]
+import requests
+from bs4 import BeautifulSoup
+import json
+import math
+
+BASE_URL = "https://www.megaeletronicos.com"
+CONVERSION_RATE = 0.0037  # Aproximado guarani -> real
+LUCRO = 1.6  # 60% de lucro
+
+def get_all_categories():
+    """Pega as categorias do menu principal"""
+    url = BASE_URL
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    categorias = []
+    # Encontre os links das categorias no menu principal
+    menu = soup.find('ul', class_='menu-list')
+    if not menu:
+        print("Não achou o menu-list")
+        return categorias
+    links = menu.find_all('a')
+    for link in links:
+        href = link.get('href')
+        nome = link.text.strip()
+        if href and href.startswith('/categoria/'):
+            categorias.append({
+                "nome": nome,
+                "url": BASE_URL + href
+            })
+    return categorias
+
+def get_products_from_category(cat_url):
+    """Pega todos os produtos de uma categoria, incluindo páginas paginadas"""
+    produtos = []
+    pagina = 1
+    while True:
+        url = f"{cat_url}?page={pagina}"
+        resp = requests.get(url)
+        if resp.status_code != 200:
+            break
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        lista_produtos = soup.find_all('div', class_='item')  # Ajuste a classe conforme o site
+        if not lista_produtos:
+            break
+        for item in lista_produtos:
+            nome = item.find('h3')
+            preco = item.find('span', class_='price')
+            img = item.find('img')
+            link = item.find('a')
+            if not (nome and preco and img and link):
+                continue
+            nome_text = nome.text.strip()
+            preco_text = preco.text.strip().replace('Gs.', '').replace('.', '').replace(',', '.').strip()
+            try:
+                preco_guarani = float(preco_text)
+            except:
+                preco_guarani = 0
+            preco_real = preco_guarani * CONVERSION_RATE * LUCRO
+            preco_real = math.ceil(preco_real * 100) / 100  # arredondar para 2 casas decimais
+            preco_formatado = f"R$ {preco_real:.2f}"
+            img_url = img.get('src')
+            if img_url and img_url.startswith('/'):
+                img_url = BASE_URL + img_url
+            link_url = link.get('href')
+            if link_url and link_url.startswith('/'):
+                link_url = BASE_URL + link_url
+            produtos.append({
+                "nome": nome_text,
+                "preco": preco_formatado,
+                "imagem": img_url,
+                "link": link_url
+            })
+        pagina += 1
+    return produtos
+
+def main():
+    categorias = get_all_categories()
+    print(f"Categorias encontradas: {[c['nome'] for c in categorias]}")
+    todos_produtos = []
+    for cat in categorias:
+        print(f"Buscando produtos da categoria: {cat['nome']}")
+        produtos_cat = get_products_from_category(cat['url'])
+        print(f"Encontrados {len(produtos_cat)} produtos na categoria {cat['nome']}")
+        todos_produtos.extend(produtos_cat)
+
+    # Salvar em produtos.json
+    with open('produtos.json', 'w', encoding='utf-8') as f:
+        json.dump(todos_produtos, f, ensure_ascii=False, indent=2)
+    print(f"Total de produtos salvos: {len(todos_produtos)}")
+
+if __name__ == "__main__":
+    main()
