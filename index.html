@@ -60,7 +60,6 @@
 </head>
 <body>
   <header>
-    <!-- O logo deve estar no repositório com o nome exato "logo.png" -->
     <img src="logo.png" alt="Sophia Imports" onerror="this.style.display='none';" />
   </header>
 
@@ -93,9 +92,11 @@
           preco.textContent = produto.preco;
 
           const link = document.createElement('a');
-          link.href = produto.link;
+          const numeroWhatsApp = '5514998619912'; // Seu número com DDI + DDD
+          const mensagem = `Olá, tenho interesse neste produto: ${encodeURIComponent(produto.nome)}`;
+          link.href = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
           link.target = '_blank';
-          link.textContent = 'Ver produto';
+          link.textContent = 'Ver produto no WhatsApp';
 
           div.appendChild(img);
           div.appendChild(nome);
