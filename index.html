@@ -4,21 +4,68 @@
   <meta charset="UTF-8" />
   <title>Sophia Imports</title>
   <style>
-    /* Estilos básicos para o layout */
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    header img { max-width: 200px; }
-    .produto { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; width: 250px; display: inline-block; vertical-align: top; }
-    .produto img { max-width: 100%; height: auto; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header img {
+      max-width: 250px;
+    }
+
+    .produto {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px;
+      width: 260px;
+      background: #fff;
+      display: inline-block;
+      vertical-align: top;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    .produto img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .produto h3 {
+      font-size: 16px;
+      margin: 10px 0 5px;
+    }
+
+    .produto p {
+      color: green;
+      font-weight: bold;
+    }
+
+    .produto a {
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #25D366;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <!-- Logo: ajuste o caminho conforme o local da imagem no seu repo -->
-    <img src="logo.png" alt="Sophia Imports" onerror="this.onerror=null; this.src='logo-fallback.png';" />
+    <!-- O logo deve estar no repositório com o nome exato "logo.png" -->
+    <img src="logo.png" alt="Sophia Imports" onerror="this.style.display='none';" />
   </header>
 
   <main id="produtos-container">
-    <!-- Produtos aparecerão aqui -->
+    <p>Carregando produtos...</p>
   </main>
 
   <script>
@@ -36,7 +83,7 @@
           img.src = produto.imagem;
           img.alt = produto.nome;
           img.onerror = () => {
-            img.src = 'imagem-fallback.png'; // Coloque aqui uma imagem local padrão caso falhe
+            img.src = 'https://via.placeholder.com/250x200?text=Sem+Imagem';
           };
 
           const nome = document.createElement('h3');
@@ -58,8 +105,9 @@
           container.appendChild(div);
         });
       })
-      .catch(err => {
-        console.error('Erro ao carregar produtos:', err);
+      .catch(error => {
+        document.getElementById('produtos-container').innerHTML = '<p>Erro ao carregar produtos.</p>';
+        console.error('Erro ao buscar produtos:', error);
       });
   </script>
 </body>
