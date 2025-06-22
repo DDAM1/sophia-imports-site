@@ -1,54 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="UTF-8" />
   <title>Sophia Imports</title>
   <style>
-    body { font-family: Arial,sans-serif; margin:0; padding:0; background:#f5f5f5; }
-    header, footer { background:#111; color:white; text-align:center; padding:20px; }
-    h1,h2 { margin:0; padding:10px 0; }
-    .produtos { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px; }
-    .produto { background:white; padding:15px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; }
-    .produto img { width:100%; max-height:180px; object-fit:contain; }
-    .whatsapp-button { display:inline-block; margin-top:10px; background:#25D366; color:white; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; }
+    /* Estilos básicos para o layout */
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    header img { max-width: 200px; }
+    .produto { border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; width: 250px; display: inline-block; vertical-align: top; }
+    .produto img { max-width: 100%; height: auto; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Sophia Imports</h1>
-    <p>Perfumes e Eletrônicos de Qualidade</p>
+    <!-- Logo: ajuste o caminho conforme o local da imagem no seu repo -->
+    <img src="logo.png" alt="Sophia Imports" onerror="this.onerror=null; this.src='logo-fallback.png';" />
   </header>
 
-  <main>
-    <h2 style="text-align:center">Confira nossos produtos</h2>
-    <div class="produtos" id="produtos-container"></div>
+  <main id="produtos-container">
+    <!-- Produtos aparecerão aqui -->
   </main>
-
-  <footer>
-    © 2025 Sophia Imports • WhatsApp: (14) 99861‑9912
-  </footer>
 
   <script>
     fetch('https://raw.githubusercontent.com/DDAM1/sophia-imports-site/main/produtos.json')
-      .then(r => r.ok ? r.json() : Promise.reject('Não localizou produtos'))
-      .then(list => {
-        const cont = document.getElementById('produtos-container');
-        cont.innerHTML = list.map(p => `
-          <div class="produto">
-            <img src="${p.imagem}" alt="${p.nome}">
-            <h3>${p.nome}</h3>
-            <p>${p.descricao}</p>
-            <p>Preço: ${p.preco}</p>
-            <a class="whatsapp-button" href="https://wa.me/5514998619912?text=${encodeURIComponent('Olá, quero o ' + p.nome)}" target="_blank">
-              Comprar no WhatsApp
-            </a>
-          </div>
-        `).join('');
+      .then(response => response.json())
+      .then(produtos => {
+        const container = document.getElementById('produtos-container');
+        container.innerHTML = '';
+
+        produtos.forEach(produto => {
+          const div = document.createElement('div');
+          div.classList.add('produto');
+
+          const img = document.createElement('img');
+          img.src = produto.imagem;
+          img.alt = produto.nome;
+          img.onerror = () => {
+            img.src = 'imagem-fallback.png'; // Coloque aqui uma imagem local padrão caso falhe
+          };
+
+          const nome = document.createElement('h3');
+          nome.textContent = produto.nome;
+
+          const preco = document.createElement('p');
+          preco.textContent = produto.preco;
+
+          const link = document.createElement('a');
+          link.href = produto.link;
+          link.target = '_blank';
+          link.textContent = 'Ver produto';
+
+          div.appendChild(img);
+          div.appendChild(nome);
+          div.appendChild(preco);
+          div.appendChild(link);
+
+          container.appendChild(div);
+        });
       })
       .catch(err => {
-        console.error(err);
-        document.getElementById('produtos-container').innerHTML = '<p style="text-align:center;">Erro ao carregar produtos. Verifique o JSON.</p>';
+        console.error('Erro ao carregar produtos:', err);
       });
   </script>
 </body>
